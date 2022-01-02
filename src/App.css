@@ -1,12 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,900;1,400&display=swap");
+
 * {
   background-color: #f3f3f3;
+  text-align: center;
 }
 
 .App-header {
   margin: 30px 0;
+
+  font-size: 36px;
+  font-family: "Montserrat", sans-serif;
 }
 
 .App-footer {
-  text-align: center;
   margin: 30px 0;
 }
