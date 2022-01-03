@@ -3,13 +3,17 @@ import "./Dictionary.css";
 import axios from "axios";
 import Results from "./Results";
 
-export default function Dictionary() {
-  let [word, setWord] = useState("");
+export default function Dictionary(props) {
+  let [word, setWord] = useState(props.defaultKeyword);
   let [results, setResults] = useState(null);
+  let [loaded, setLoaded] = useState(false);
 
-  function search(event) {
+  function handleSubmit(event) {
     event.preventDefault();
+    search();
+  }
 
+  function search() {
     // documentation: https://dictionaryapi.dev/
     let apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
 
@@ -24,17 +28,34 @@ export default function Dictionary() {
     setWord(event.target.value);
   }
 
-  return (
-    <div className="Dictionary">
-      <form onSubmit={search}>
-        <input
-          type="search"
-          autoFocus={true}
-          placeholder="Type a word"
-          onChange={handleWordChange}
-        ></input>
-      </form>
-      <Results results={results} />
-    </div>
-  );
+  function load() {
+    setLoaded(true);
+    search();
+  }
+
+  if (loaded) {
+    return (
+      <div className="Dictionary">
+        <section>
+          <h1>What word are you looking for?</h1>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="search"
+              autoFocus={true}
+              placeholder="Type a word"
+              onChange={handleWordChange}
+              defaultValue={props.defaultKeyword}
+            ></input>
+            <div className="Hint">
+              suggested words: sunset, wine, yoga forest...
+            </div>
+          </form>
+        </section>
+        <Results results={results} />
+      </div>
+    );
+  } else {
+    load();
+    return "loading";
+  }
 }
