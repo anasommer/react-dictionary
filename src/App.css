@@ -11,3 +11,7 @@
   margin: 30px 0;
   text-align: center;
 }
+
+.App a {
+  text-decoration: none;
+}
